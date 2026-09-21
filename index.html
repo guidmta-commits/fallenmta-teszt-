@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-    <!-- Meta adatok -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Üdvözlünk a FallenMTA weboldalán - Egyhelyen minden!">
     <title>FallenMTA - Főoldal</title>
-    
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Stíluslap hivatkozás -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- BEJELENTKEZÉS MODAL (Enyésszen el, ha a Fórumra kattintanak) -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-box">
+            <h2>FallenMTA Fórum Bejelentkezés</h2>
+            <p>Add meg az adataidat a folytatáshoz!</p>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <input type="text" placeholder="Felhasználónév" required>
+                <input type="password" placeholder="Jelszó" required>
+                <button type="submit" class="btn btn-primary">Bejelentkezés</button>
+            </form>
+            <button class="close-modal" onclick="closeLogin()">Vissza a főoldalra</button>
+        </div>
+    </div>
+
     <!-- Navigációs sáv -->
     <header class="navbar">
-        <div class="logo-container">
-            <!-- FallenMTA SVG Logo -->
+        <div class="logo-container" onclick="location.reload()" style="cursor: pointer;">
             <svg class="nav-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 15H80L65 40H52V85H48V40H35L20 15Z" fill="#C53030"/>
                 <path d="M28 25H72L61 45H52V75H48V45H39L28 25Z" fill="#E53E3E"/>
@@ -26,52 +34,109 @@
             <span class="logo-text">Fallen<span class="logo-mta">MTA</span></span>
         </div>
         <nav class="nav-links">
-            <a href="#" class="active">Főoldal</a>
+            <a href="#" class="active" onclick="showHome(event)">Főoldal</a>
             <a href="#hirek">Hírek</a>
-            <a href="#">Kapcsolat</a>
-            <a href="#">Fórum</a>
+            <a href="https://discord.gg/f7WHCrTA" target="_blank">Kapcsolat</a>
+            <a href="#" onclick="openLogin(event)">Fórum</a>
         </nav>
     </header>
 
-    <!-- Fő tartalom (Hero szekció) -->
-    <main class="hero-section">
-        <div class="hero-content">
-            <!-- Nagy középső logó -->
-            <div class="hero-logo-wrapper">
-                <svg class="main-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 20H105L85 55H68V105H52V55H35L15 20Z" fill="#A72828"/>
-                    <path d="M27 28H93L76 58H65V95H55V58H44L27 28Z" fill="#C53030"/>
+    <!-- FŐOLDAL TARTALOM -->
+    <div id="homeContent">
+        <main class="hero-section">
+            <div class="hero-content">
+                <div class="hero-logo-wrapper">
+                    <svg class="main-logo" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 20H105L85 55H68V105H52V55H35L15 20Z" fill="#A72828"/>
+                        <path d="M27 28H93L76 58H65V95H55V58H44L27 28Z" fill="#C53030"/>
+                    </svg>
+                </div>
+                <h1>Üdvözlünk a <span class="highlight">FallenMTA</span> weboldalán!</h1>
+                <p class="subtitle">Egyhelyen minden!</p>
+                <div class="hero-buttons">
+                    <a href="#hirek" class="btn btn-primary">Hírek megtekintése</a>
+                    <a href="https://discord.gg/f7WHCrTA" target="_blank" class="btn btn-secondary">Discord csatlakozás</a>
+                </div>
+            </div>
+        </main>
+
+        <section id="hirek" class="news-section">
+            <div class="news-container">
+                <h2>Friss Hírek</h2>
+                <div class="news-card">
+                    <span class="news-date">2026. Szeptember</span>
+                    <h3>Legjobb MTA szerver hamarosan nyit!</h3>[cite: 5]
+                    <p>Hamarosan megnyitja kapuit a FallenMTA! Készüljetek fel a legizgalmasabb szerepjáték élményre, egyedi scriptetekkel és remek közösséggel.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FÓRUM NÉZET (Bejelentkezés után jelenik meg) -->
+    <div id="forumContent" class="forum-view" style="display: none;">
+        <div class="forum-topbar">
+            <div class="logo-container">
+                <svg class="nav-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 15H80L65 40H52V85H48V40H35L20 15Z" fill="#C53030"/>
+                    <path d="M28 25H72L61 45H52V75H48V45H39L28 25Z" fill="#E53E3E"/>
                 </svg>
+                <span class="logo-text">Fallen<span class="logo-mta">MTA</span> Fórum</span>
             </div>
-
-            <h1>Üdvözlünk a <span class="highlight">FallenMTA</span> weboldalán!</h1>
-            <p class="subtitle">Egyhelyen minden!</p>
-
-            <!-- Gombok -->
-            <div class="hero-buttons">
-                <a href="#hirek" class="btn btn-primary">Hírek megtekintése</a>
-                <a href="https://discord.gg/f7WHCrTA" target="_blank" class="btn btn-secondary">Discord csatlakozás</a>
+            <div class="forum-user-info">
+                <span>Üdv, Játékos!</span>
+                <button onclick="showHome(event)" class="btn-logout">Kijelentkezés</button>
             </div>
         </div>
-    </main>
-
-    <!-- Hírek szekció (ide dobja le az oldalt) -->
-    <section id="hirek" class="news-section">
-        <div class="news-container">
-            <h2>Friss Hírek</h2>
-            <div class="news-card">
-                <span class="news-date">2026. Szeptember</span>
-                <h3>Legjobb MTA szerver hamarosan nyit!</h3>
-                <p>Hamarosan megnyitja kapuit a FallenMTA! Készüljetek fel a legizgalmasabb szerepjáték élményre, egyedi scriptetekkel és remek közösséggel. Csatlakozzatok Discord szerverünkre, hogy le ne maradjatok a legfrissebb információkról!</p>
+        <div class="forum-body">
+            <div class="forum-category-box">
+                <h3>Általános Kategóriák</h3>
+                <div class="forum-row">
+                    <span>Főoldal & Szabályzatok</span>
+                    <span class="forum-stats">Téma: 14 | Üzenet: 52</span>
+                </div>
+                <div class="forum-row">
+                    <span>Hírek & Frissítések</span>
+                    <span class="forum-stats">Téma: 8 | Üzenet: 120</span>
+                </div>
+            </div>
+            <div class="forum-category-box">
+                <h3>FallenMTA - Los Santos</h3>
+                <div class="forum-row">
+                    <span>Szerver fejlesztések / Changelogok</span>[cite: 8]
+                    <span class="forum-stats">Téma: 18 | Üzenet: 18</span>[cite: 8]
+                </div>
+                <div class="forum-row">
+                    <span>Panaszkönyv [LS]</span>[cite: 8]
+                    <span class="forum-stats">Téma: 1.6K | Üzenet: 9.2K</span>[cite: 8]
+                </div>
+                <div class="forum-row">
+                    <span>Unban kérelmek [LS]</span>[cite: 8, 9]
+                    <span class="forum-stats">Téma: 1.4K | Üzenet: 3.2K</span>[cite: 8, 9]
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- JavaScript kód -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            console.log("A FallenMTA weboldal sikeresen betöltődött!");
-        });
+        function openLogin(e) {
+            e.preventDefault();
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+        function closeLogin() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+        function handleLogin(e) {
+            e.preventDefault();
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('homeContent').style.display = 'none';
+            document.getElementById('forumContent').style.display = 'block';
+        }
+        function showHome(e) {
+            e.preventDefault();
+            document.getElementById('forumContent').style.display = 'none';
+            document.getElementById('homeContent').style.display = 'block';
+            closeLogin();
+        }
     </script>
 </body>
 </html>
